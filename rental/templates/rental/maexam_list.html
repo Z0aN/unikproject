@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Экзамены — Maexam</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-5">
+    <h1 class="mb-4">Страница экзаменов</h1>
+    <h3>ФИО: {{ fio }}</h3>
+    <h4>Группа: {{ group }}</h4>
+    <hr>
+    {% if exams %}
+        <div class="row">
+            {% for exam in exams %}
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        {% if exam.image %}
+                            <img src="{{ exam.image.url }}" class="card-img-top" alt="{{ exam.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">Название экзамена: {{ exam.title }}</h5>
+                            <p><strong>Дата добавления:</strong> {{ exam.created_at|date:"d.m.Y" }}</p>
+                            <p><strong>Дата проведения:</strong> {{ exam.exam_date|date:"d.m.Y" }}</p>
+                            <p><strong>Пользователи:</strong>
+                                {% for user in exam.users.all %}
+                                    {{ user.username }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                            <p><strong>Опубликовано:</strong> {{ exam.is_public|yesno:"Да,Нет" }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Нет опубликованных экзаменов.</p>
+    {% endif %}
+</div>
+</body>
+</html>

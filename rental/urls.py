@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('car/<int:pk>/', views.car_detail, name='car_detail'),  # ← new
+    path('maexam/', views.maexam_list, name='maexam_list'),
 ]

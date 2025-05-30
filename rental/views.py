@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from .models import Car
+from .models import Maexam
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Avg, Count
+
 
 def home(request):
     per_page = request.GET.get('per_page', 4)
@@ -44,3 +46,12 @@ def car_detail(request, pk):
         'car': car,
         'car_list': car_list
     })
+
+def maexam_list(request):
+    exams = Maexam.objects.filter(is_public=True)
+    context = {
+        'exams': exams,
+        'fio': 'Максим Андрианов',
+        'group': '231-365'
+    }
+    return render(request, 'rental/maexam_list.html', context)
