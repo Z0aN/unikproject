@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Car, Booking, Service
+from .models import maexam
 
 # Регистрация модели "Услуга"
 @admin.register(Service)
@@ -36,3 +37,10 @@ class BookingAdmin(admin.ModelAdmin):
     date_hierarchy = "date_from"
     search_fields = ("user__username", "car__name")
     raw_id_fields = ("user", "car")  # чтобы не грузить большой список
+
+@admin.register(maexam)
+class maexamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'exam_date', 'is_public')
+    list_filter = ('is_public', 'exam_date')
+    search_fields = ('name',)
+    filter_horizontal = ('users',)
