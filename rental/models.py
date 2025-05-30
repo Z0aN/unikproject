@@ -65,17 +65,18 @@ class Booking(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.car.name}"
 
-class maexam(models.Model):
-    name = models.CharField("Название экзамена", max_length=200)
-    created_at = models.DateTimeField("Дата создания записи", default=timezone.now)
-    exam_date = models.DateField("Дата проведения экзамена")
-    image = models.ImageField("Изображение задания", upload_to="exams/", blank=True, null=True)
-    users = models.ManyToManyField(User, verbose_name="Пользователи, пишущие экзамен")
+class Maexam(models.Model):
+    name = models.CharField("Название экзамена", max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    exam_date = models.DateField(verbose_name="Дата проведения экзамена")
+    image = models.ImageField("Задание", upload_to='exam_images/', blank=True, null=True)
+    users = models.ManyToManyField(User, verbose_name="Пользователи")
     is_public = models.BooleanField("Опубликовано", default=False)
 
     class Meta:
         verbose_name = "Экзамен"
         verbose_name_plural = "Экзамены"
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.name
